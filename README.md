@@ -37,22 +37,22 @@ cpp-avolution-task-manager/
 
 ## Evolution Roadmap
 
-### C++98 Foundation
+### C++98 Foundation (v0.1.0)
 - Basic OOP design with classes
 - STL containers usage
 - Clean class interfaces
 
+### C++11 Modern Features (v0.2.0)
+- **Smart pointers** (`std::unique_ptr`) for automatic memory management
+- **Move semantics** (`std::move`) for efficient ownership transfer
+- **Auto keyword** usage in algorithms
+- **Lambda functions** in STL algorithms
+
 ### Planned C++ Evolution Steps
 
-**C++11 Features:**
-- Smart pointers (`std::unique_ptr`, `std::shared_ptr`)
-- Move semantics and rvalue references
-- Lambda functions
-- `auto` keyword usage
-
 **C++14 Enhancements:**
+- `std::make_unique` for safer object creation
 - Generic lambdas
-- `std::make_unique`
 - Improved `constexpr`
 
 **C++17 Modernization:**
@@ -83,12 +83,16 @@ cpp-avolution-task-manager/
 ## How to Build and Run
 
 ```bash
-# Compile the project
-g++ -std=c++98 main.cpp src/*.cpp -o task_manager
+# Compile the project (C++11 required for smart pointers)
+g++ -std=c++11 main.cpp src/*.cpp -o task_manager
 
 # Run the application
 ./task_manager
 ```
+
+**Requirements:**
+- C++11 compatible compiler
+- Support for `std::unique_ptr` and move semantics
 
 ## Usage Example
 
@@ -122,4 +126,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++98 Foundation
+**Status**: 🟢 Active Development | **Current Version**: C++11 Smart Pointers (v0.2.0)

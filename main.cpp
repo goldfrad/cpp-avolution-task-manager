@@ -7,7 +7,7 @@
 
 int main()
 {
-    TaskRepository repo;2
+    TaskRepository repo;
     TaskService service(repo);
     ConsoleUI ui(service);
     ui.run();   
