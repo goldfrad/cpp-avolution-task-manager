@@ -11,12 +11,18 @@ This project showcases my transition from **3 years of C programming experience*
 - **Console-based interface** for task management
 - **Object-oriented design** with clean separation of concerns
 - **CRUD operations** for tasks (Create, Read, Update, Delete)
-- **Task status tracking** (Pending/Completed)
+- **Task status tracking** (Pending/In Progress/Completed)
+- **Search & Filter** with lambda predicates:
+  - Filter by status
+  - Search by keyword in title
+  - Filter by ID range
+- **Move semantics** for efficient object handling
+- **Input validation** for robust user interaction
 - **Modular architecture** with dedicated classes:
-  - `Task` - Task data model
-  - `TaskRepository` - Data storage and retrieval
-  - `TaskService` - Business logic layer
-  - `ConsoleUI` - User interface layer
+  - `Task` - Task data model with move semantics
+  - `TaskRepository` - Data storage with smart pointers
+  - `TaskService` - Business logic with lambda filtering
+  - `ConsoleUI` - User interface with input validation
 
 ## Project Structure
 
@@ -42,11 +48,13 @@ cpp-avolution-task-manager/
 - STL containers usage
 - Clean class interfaces
 
-### C++11 Modern Features (v0.2.0)
+### C++11 Modern Features (v0.2.0 - v0.3.0)
 - **Smart pointers** (`std::unique_ptr`) for automatic memory management
-- **Move semantics** (`std::move`) for efficient ownership transfer
+- **Move semantics** - Rule of 5 implementation in Task class
 - **Auto keyword** usage in algorithms
-- **Lambda functions** in STL algorithms
+- **Lambda functions** with captures for filtering and searching
+- **Template functions** for generic predicates
+- **Input validation** with `std::numeric_limits`
 
 ### Planned C++ Evolution Steps
 
@@ -103,12 +111,25 @@ g++ -std=c++11 main.cpp src/*.cpp -o task_manager
 1. List all tasks
 2. Add new task
 3. Complete task
+4. Search tasks
 0. Exit
 
 Enter your choice: 2
 Enter task title: Learn Modern C++
 Enter task description: Study C++20 and C++23 features
 Task created with ID: 1
+
+Enter your choice: 4
+=== Search Tasks ===
+1. By status (Pending)
+2. By status (In Progress)
+3. By status (Completed)
+4. By keyword in title
+5. By ID range
+Choose search type: 4
+Enter keyword: Modern
+=== Search Results ===
+ID: 1 | Title: Learn Modern C++ | Status: Pending
 ```
 
 ## Future Work
@@ -126,4 +147,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++11 Smart Pointers (v0.2.0)
+**Status**: 🟢 Active Development | **Current Version**: C++11 Move Semantics & Lambdas (v0.3.0)

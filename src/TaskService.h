@@ -15,6 +15,18 @@ class TaskService
         Task createTask(const std::string& title, const std::string& desc);
         bool completeTask(int id);
         std::vector<Task> listAll() const;
+        
+        // Filter with lambda predicate
+        template<typename Predicate>
+        std::vector<const Task*> filter(Predicate predicate) const {
+            std::vector<const Task*> result;
+            for (const auto& task : repo.getAllTasks()) {
+                if (predicate(*task)) {
+                    result.push_back(task.get());
+                }
+            }
+            return result;
+        }
 }; 
 
 #endif // TASKSERVICE_H

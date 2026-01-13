@@ -5,12 +5,40 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 ## [Unreleased]
 
 ### Planned
-- Lambda functions integration in UI layer
 - Unit testing framework
 - File-based persistence
 - GUI interface
-- C++14 features (make_unique, generic lambdas)
 - C++17 features (structured bindings, optional)
+
+## [0.3.0] - 2026-01-13
+
+### Added - Move Semantics & Lambda Filters
+- **Move Semantics in Task Class (Rule of 5)**
+  - Move constructor for efficient object transfer
+  - Move assignment operator
+  - Explicit copy constructor/assignment (= default)
+  - Proper `noexcept` specification
+
+- **Lambda-based Task Filtering**
+  - New `filter()` template function in TaskService
+  - Accepts any predicate (lambda/functor)
+  - Returns `std::vector<const Task*>` for read-only access
+
+- **Search Menu in ConsoleUI**
+  - Filter by status (Pending/In Progress/Completed)
+  - Search by keyword in title
+  - Filter by ID range
+  - Lambda capture demonstrations (`[keyword]`, `[minId, maxId]`)
+
+- **Input Validation**
+  - `readInt()` helper function for safe integer input
+  - Handles non-numeric input gracefully
+  - Clears cin error state and buffer
+
+### Technical Improvements
+- Template function in header (required for templates)
+- `std::numeric_limits` for proper buffer clearing
+- Consistent use of `const Task*` for read-only access
 
 ## [0.2.0] - 2026-01-12
 
@@ -116,5 +144,5 @@ This changelog tracks the evolution from C programming background to modern C++ 
 - Introduced move semantics for better performance
 - Maintained clean API while improving internal efficiency
 
-**Current Status**: ✅ C++11 Smart Pointers Complete  
+**Current Status**: C++11 Smart Pointers Complete  
 **Next Milestone**: C++14 Enhanced Features (make_unique, generic lambdas)
