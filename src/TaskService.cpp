@@ -5,9 +5,9 @@
 TaskService::TaskService(TaskRepository& repository) : repo(repository) {}
 
 Task TaskService::createTask(const std::string& title, const std::string& desc) {
-    static int nextId = 1;
-    auto newTask = std::unique_ptr<Task>(new Task(nextId++, title, desc));
-    Task taskCopy = *newTask;  // Create copy to return
+    int id = repo.getNextId();
+    auto newTask = std::make_unique<Task>(id, title, desc);
+    Task taskCopy = *newTask;
     repo.add(std::move(newTask));
     return taskCopy;
 }

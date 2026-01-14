@@ -9,6 +9,7 @@ This project showcases my transition from **3 years of C programming experience*
 ## Current Features
 
 - **Console-based interface** for task management
+- **File persistence** - tasks saved/loaded automatically
 - **Object-oriented design** with clean separation of concerns
 - **CRUD operations** for tasks (Create, Read, Update, Delete)
 - **Task status tracking** (Pending/In Progress/Completed)
@@ -20,7 +21,7 @@ This project showcases my transition from **3 years of C programming experience*
 - **Input validation** for robust user interaction
 - **Modular architecture** with dedicated classes:
   - `Task` - Task data model with move semantics
-  - `TaskRepository` - Data storage with smart pointers
+  - `TaskRepository` - Data storage with smart pointers and file I/O
   - `TaskService` - Business logic with lambda filtering
   - `ConsoleUI` - User interface with input validation
 
@@ -147,4 +148,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++11 Move Semantics & Lambdas (v0.3.0)
+**Status**: 🟢 Active Development | **Current Version**: C++11 File Persistence (v0.4.0)

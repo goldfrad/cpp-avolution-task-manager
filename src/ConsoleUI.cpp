@@ -28,6 +28,7 @@ void ConsoleUI::run() {
         handleInput(choice);
     } while (choice != 0);
     
+    service.save();
     std::cout << "=== Task Manager Ended ===" << std::endl;
 }
 

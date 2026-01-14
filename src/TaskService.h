@@ -15,6 +15,7 @@ class TaskService
         Task createTask(const std::string& title, const std::string& desc);
         bool completeTask(int id);
         std::vector<Task> listAll() const;
+        void save() const { repo.save(); }
         
         // Filter with lambda predicate
         template<typename Predicate>

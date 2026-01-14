@@ -6,9 +6,27 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 
 ### Planned
 - Unit testing framework
-- File-based persistence
 - GUI interface
 - C++17 features (structured bindings, optional)
+
+## [0.4.0] - 2026-01-14
+
+### Added - File Persistence
+- **File-based Storage**
+  - Tasks saved to `tasks.txt` on exit
+  - Tasks loaded automatically on startup
+  - Plain text format: `ID|Title|Description|Status`
+
+- **TaskRepository Enhancements**
+  - Constructor accepts filename (default: "tasks.txt")
+  - `load()` - reads tasks from file
+  - `save()` - writes tasks to file
+  - `getNextId()` - manages ID counter across sessions
+
+### Changed
+- Moved `nextId` from TaskService to TaskRepository
+- Used `std::make_unique` instead of raw `new`
+- Added `save()` method to TaskService (delegates to repo)
 
 ## [0.3.0] - 2026-01-13
 
