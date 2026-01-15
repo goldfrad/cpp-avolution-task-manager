@@ -10,6 +10,10 @@ This project showcases my transition from **3 years of C programming experience*
 
 - **Console-based interface** for task management
 - **File persistence** - tasks saved/loaded automatically
+- **Time management** with `std::chrono`:
+  - Creation timestamps
+  - Deadlines with date/time
+  - Overdue detection
 - **Object-oriented design** with clean separation of concerns
 - **CRUD operations** for tasks (Create, Read, Update, Delete)
 - **Task status tracking** (Pending/In Progress/Completed)
@@ -17,10 +21,11 @@ This project showcases my transition from **3 years of C programming experience*
   - Filter by status
   - Search by keyword in title
   - Filter by ID range
+  - Show overdue tasks
 - **Move semantics** for efficient object handling
 - **Input validation** for robust user interaction
 - **Modular architecture** with dedicated classes:
-  - `Task` - Task data model with move semantics
+  - `Task` - Task data model with move semantics and timestamps
   - `TaskRepository` - Data storage with smart pointers and file I/O
   - `TaskService` - Business logic with lambda filtering
   - `ConsoleUI` - User interface with input validation
@@ -148,4 +153,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++11 File Persistence (v0.4.0)
+**Status**: 🟢 Active Development | **Current Version**: C++11 Time Management (v0.5.0)

@@ -9,6 +9,27 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - GUI interface
 - C++17 features (structured bindings, optional)
 
+## [0.5.0] - 2026-01-15
+
+### Added - Time Management with std::chrono
+- **Task Timestamps**
+  - `createdAt` - automatically set when task is created
+  - `deadline` - optional deadline with date and time
+  - `isOverdue()` - checks if task is past deadline
+
+- **New Menu Options**
+  - Set deadline (days, hours, minutes)
+  - Show overdue tasks
+  - Option to set deadline when creating task
+
+- **Display Enhancements**
+  - Tasks show creation date and deadline
+  - Overdue tasks marked with [OVERDUE]
+
+### Changed
+- File format now includes timestamps (backward compatible)
+- Move semantics updated for new time fields
+
 ## [0.4.0] - 2026-01-14
 
 ### Added - File Persistence

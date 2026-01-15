@@ -21,6 +21,15 @@ bool TaskService::completeTask(int id) {
     return false;
 }
 
+bool TaskService::setDeadline(int id, std::chrono::system_clock::time_point deadline) {
+    Task* task = repo.findById(id);
+    if (task) {
+        task->setDeadline(deadline);
+        return true;
+    }
+    return false;
+}
+
 std::vector<Task> TaskService::listAll() const {
     return repo.listAll();
 }

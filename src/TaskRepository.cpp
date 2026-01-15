@@ -20,18 +20,35 @@ void TaskRepository::load() {
         if (line.empty()) continue;
         
         std::istringstream iss(line);
-        std::string idStr, title, description, statusStr;
+        std::string idStr, title, description, statusStr, createdStr, deadlineStr;
         
         std::getline(iss, idStr, '|');
         std::getline(iss, title, '|');
         std::getline(iss, description, '|');
         std::getline(iss, statusStr, '|');
+        std::getline(iss, createdStr, '|');
+        std::getline(iss, deadlineStr, '|');
         
         int id = std::stoi(idStr);
         Status status = static_cast<Status>(std::stoi(statusStr));
         
         auto task = std::make_unique<Task>(id, title, description);
         task->setStatus(status);
+        
+        // Load timestamps (support old format without timestamps)
+        if (!createdStr.empty()) {
+            try {
+                auto createdTime = std::chrono::system_clock::from_time_t(std::stoll(createdStr));
+                task->setCreatedAt(createdTime);
+            } catch (...) {}
+        }
+        if (!deadlineStr.empty() && deadlineStr != "-1") {
+            try {
+                auto deadlineTime = std::chrono::system_clock::from_time_t(std::stoll(deadlineStr));
+                task->setDeadline(deadlineTime);
+            } catch (...) {}
+        }
+        
         tasks.push_back(std::move(task));
         
         if (id >= nextId) {
@@ -43,14 +60,23 @@ void TaskRepository::load() {
 void TaskRepository::save() const {
     std::ofstream outFile(filename);
     if (!outFile.is_open()) {
-        return; // Could throw or return bool for error handling
+        return;
     }
     
     for (const auto& task : tasks) {
+        auto createdTime = std::chrono::system_clock::to_time_t(task->getCreatedAt());
+        auto deadlineTime = std::chrono::system_clock::to_time_t(task->getDeadline());
+        
+        // Use -1 for no deadline
+        std::string deadlineStr = (task->getDeadline() == std::chrono::system_clock::time_point::max()) 
+            ? "-1" : std::to_string(deadlineTime);
+        
         outFile << task->getId() << "|"
                 << task->getTitle() << "|"
                 << task->getDescription() << "|"
-                << static_cast<int>(task->getStatus()) << "\n";
+                << static_cast<int>(task->getStatus()) << "|"
+                << createdTime << "|"
+                << deadlineStr << "\n";
     }
 }
 

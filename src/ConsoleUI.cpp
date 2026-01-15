@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <chrono>
 
 ConsoleUI::ConsoleUI(TaskService& svc) : service(svc) {}
 
@@ -38,6 +39,8 @@ void ConsoleUI::printMenu() {
     std::cout << "2. Add new task" << std::endl;
     std::cout << "3. Complete task" << std::endl;
     std::cout << "4. Search tasks" << std::endl;
+    std::cout << "5. Set deadline" << std::endl;
+    std::cout << "6. Show overdue tasks" << std::endl;
     std::cout << "0. Exit" << std::endl;
 }
 
@@ -56,10 +59,13 @@ void ConsoleUI::handleInput(int choice) {
                         case InProgress: statusStr = "In Progress"; break;
                         case Completed: statusStr = "Completed"; break;
                     }
+                    std::string overdueStr = task.isOverdue() ? " [OVERDUE]" : "";
                     std::cout << "ID: " << task.getId() 
                               << " | Title: " << task.getTitle()
-                              << " | Status: " << statusStr << std::endl;
+                              << " | Status: " << statusStr << overdueStr << std::endl;
                     std::cout << "  Description: " << task.getDescription() << std::endl;
+                    std::cout << "  Created: " << task.getCreatedAtStr() 
+                              << " | Deadline: " << task.getDeadlineStr() << std::endl;
                 }
             }
             break;
@@ -75,6 +81,25 @@ void ConsoleUI::handleInput(int choice) {
             
             Task newTask = service.createTask(title, description);
             std::cout << "Task created with ID: " << newTask.getId() << std::endl;
+            
+            std::cout << "Set deadline? (1=Yes, 0=No): ";
+            int setDl = readInt();
+            if (setDl == 1) {
+                std::cout << "Enter days from now (0 for today): ";
+                int days = readInt();
+                std::cout << "Enter hour (0-23): ";
+                int hours = readInt();
+                std::cout << "Enter minutes (0-59): ";
+                int minutes = readInt();
+                
+                auto now = std::chrono::system_clock::now();
+                auto today = std::chrono::floor<std::chrono::hours>(now) - 
+                             std::chrono::hours(std::chrono::duration_cast<std::chrono::hours>(now.time_since_epoch()).count() % 24);
+                auto deadline = today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
+                
+                service.setDeadline(newTask.getId(), deadline);
+                std::cout << "Deadline set!" << std::endl;
+            }
             break;
         }
         case 3: {
@@ -164,6 +189,49 @@ void ConsoleUI::handleInput(int choice) {
         case 0:
             std::cout << "Goodbye!" << std::endl;
             break;
+        case 5: {
+            std::cout << "\n=== Set Deadline ===" << std::endl;
+            std::cout << "Enter task ID: ";
+            int taskId = readInt();
+            
+            std::cout << "Enter days from now (0 for today): ";
+            int days = readInt();
+            std::cout << "Enter hour (0-23): ";
+            int hours = readInt();
+            std::cout << "Enter minutes (0-59): ";
+            int minutes = readInt();
+            
+            // Get today at midnight
+            auto now = std::chrono::system_clock::now();
+            auto today = std::chrono::floor<std::chrono::hours>(now) - 
+                         std::chrono::hours(std::chrono::duration_cast<std::chrono::hours>(now.time_since_epoch()).count() % 24);
+            
+            auto deadline = today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
+            
+            if (service.setDeadline(taskId, deadline)) {
+                std::cout << "Deadline set successfully!" << std::endl;
+            } else {
+                std::cout << "Task not found!" << std::endl;
+            }
+            break;
+        }
+        case 6: {
+            std::cout << "\n=== Overdue Tasks ===" << std::endl;
+            auto results = service.filter([](const Task& t) { 
+                return t.isOverdue(); 
+            });
+            
+            if (results.empty()) {
+                std::cout << "No overdue tasks." << std::endl;
+            } else {
+                for (const auto* task : results) {
+                    std::cout << "ID: " << task->getId() 
+                              << " | Title: " << task->getTitle()
+                              << " | Deadline: " << task->getDeadlineStr() << std::endl;
+                }
+            }
+            break;
+        }
         default:
             std::cout << "Invalid choice! Please try again." << std::endl;
             break;
