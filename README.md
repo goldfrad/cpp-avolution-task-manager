@@ -69,10 +69,10 @@ cpp-avolution-task-manager/
 
 ### Planned C++ Evolution Steps
 
-**C++14 Enhancements:**
-- `std::make_unique` for safer object creation
-- Generic lambdas
-- Improved `constexpr`
+### C++14 Enhanced Features (v0.7.0)
+- **constexpr** constants and functions for compile-time evaluation
+- Improved type safety with constexpr validation
+- Character limits for task fields
 
 **C++17 Modernization:**
 - Structured bindings
@@ -102,16 +102,16 @@ cpp-avolution-task-manager/
 ## How to Build and Run
 
 ```bash
-# Compile the project (C++11 required for smart pointers)
-g++ -std=c++11 main.cpp src/*.cpp -o task_manager
+# Compile the project (C++14 required)
+g++ -std=c++14 main.cpp src/*.cpp -o task_manager -pthread
 
 # Run the application
 ./task_manager
 ```
 
 **Requirements:**
-- C++11 compatible compiler
-- Support for `std::unique_ptr` and move semantics
+- C++14 compatible compiler
+- pthread support for multithreading
 
 ## Usage Example
 
@@ -158,4 +158,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++11 Multithreading (v0.6.0)
+**Status**: 🟢 Active Development | **Current Version**: C++14 constexpr (v0.7.0)

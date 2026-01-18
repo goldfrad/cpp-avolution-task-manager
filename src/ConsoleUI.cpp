@@ -104,9 +104,9 @@ void ConsoleUI::handleInput(int choice) {
             std::cout << "\n=== Add New Task ===" << std::endl;
             std::cin.ignore(); // Clear input buffer
             std::string title, description;
-            std::cout << "Enter task title: ";
+            std::cout << "Enter task title (max " << Task::MAX_TITLE_LENGTH << " chars): ";
             std::getline(std::cin, title);
-            std::cout << "Enter task description: ";
+            std::cout << "Enter task description (max " << Task::MAX_DESCRIPTION_LENGTH << " chars): ";
             std::getline(std::cin, description);
             
             Task newTask = service.createTask(title, description);
@@ -123,8 +123,13 @@ void ConsoleUI::handleInput(int choice) {
                 int minutes = readInt();
                 
                 auto now = std::chrono::system_clock::now();
-                auto today = std::chrono::floor<std::chrono::hours>(now) - 
-                             std::chrono::hours(std::chrono::duration_cast<std::chrono::hours>(now.time_since_epoch()).count() % 24);
+                auto now_t = std::chrono::system_clock::to_time_t(now);
+                std::tm* tm = std::localtime(&now_t);
+                tm->tm_hour = 0;
+                tm->tm_min = 0;
+                tm->tm_sec = 0;
+                auto today = std::chrono::system_clock::from_time_t(std::mktime(tm));
+                
                 auto deadline = today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
                 
                 service.setDeadline(newTask.getId(), deadline);
@@ -233,8 +238,12 @@ void ConsoleUI::handleInput(int choice) {
             
             // Get today at midnight
             auto now = std::chrono::system_clock::now();
-            auto today = std::chrono::floor<std::chrono::hours>(now) - 
-                         std::chrono::hours(std::chrono::duration_cast<std::chrono::hours>(now.time_since_epoch()).count() % 24);
+            auto now_t = std::chrono::system_clock::to_time_t(now);
+            std::tm* tm = std::localtime(&now_t);
+            tm->tm_hour = 0;
+            tm->tm_min = 0;
+            tm->tm_sec = 0;
+            auto today = std::chrono::system_clock::from_time_t(std::mktime(tm));
             
             auto deadline = today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
             

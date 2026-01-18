@@ -17,6 +17,12 @@ class Task
         std::chrono::system_clock::time_point deadline;
         
     public:
+        // C++14 constexpr constants
+        static constexpr size_t MAX_TITLE_LENGTH = 100;
+        static constexpr size_t MAX_DESCRIPTION_LENGTH = 500;
+        static constexpr int MIN_ID = 1;
+        static constexpr int MAX_ID = 999999;
+        
         Task(int id, const std::string& title, const std::string& desc);
         
         // Rule of 5 - Move semantics
@@ -42,6 +48,19 @@ class Task
         bool isOverdue() const;
         std::string getCreatedAtStr() const;
         std::string getDeadlineStr() const;
+        
+        // C++14 constexpr helper functions
+        static constexpr bool isValidId(int id) {
+            return id >= MIN_ID && id <= MAX_ID;
+        }
+        
+        static constexpr size_t getMaxTitleLength() {
+            return MAX_TITLE_LENGTH;
+        }
+        
+        static constexpr size_t getMaxDescriptionLength() {
+            return MAX_DESCRIPTION_LENGTH;
+        }
 }; 
 
 #endif // TASK_H

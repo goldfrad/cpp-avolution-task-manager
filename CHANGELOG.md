@@ -9,6 +9,24 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - GUI interface
 - C++17 features (structured bindings, optional)
 
+## [0.7.0] - 2026-01-15
+
+### Added - C++14 constexpr Constants
+- **Compile-time Constants**
+  - `MAX_TITLE_LENGTH` = 100 characters
+  - `MAX_DESCRIPTION_LENGTH` = 500 characters
+  - `MIN_ID` and `MAX_ID` for ID validation
+  
+- **constexpr Helper Functions**
+  - `isValidId()` - compile-time ID validation
+  - `getMaxTitleLength()` - accessor for max title length
+  - `getMaxDescriptionLength()` - accessor for max description length
+
+### Changed
+- Upgraded to C++14 standard
+- Title and description automatically truncated to max length
+- UI shows character limits when creating tasks
+
 ## [0.6.0] - 2026-01-15
 
 ### Added - Multithreading with std::thread

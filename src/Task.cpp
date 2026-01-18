@@ -5,7 +5,10 @@
 #include <sstream>
 
 Task::Task(int id, const std::string& title, const std::string& desc)
-    : id(id), title(title), description(desc), status(Pending),
+    : id(id), 
+      title(title.substr(0, MAX_TITLE_LENGTH)), 
+      description(desc.substr(0, MAX_DESCRIPTION_LENGTH)), 
+      status(Pending),
       createdAt(std::chrono::system_clock::now()),
       deadline(std::chrono::system_clock::time_point::max()) {}
 
@@ -44,8 +47,13 @@ std::chrono::system_clock::time_point Task::getDeadline() const {
     return deadline; 
 }
 
-void Task::setTitle(const std::string& newTitle) { title = newTitle; }
-void Task::setDescription(const std::string& newDesc) { description = newDesc; }
+void Task::setTitle(const std::string& newTitle) { 
+    title = newTitle.substr(0, MAX_TITLE_LENGTH); 
+}
+
+void Task::setDescription(const std::string& newDesc) { 
+    description = newDesc.substr(0, MAX_DESCRIPTION_LENGTH); 
+}
 void Task::setStatus(Status newStatus) { status = newStatus; }
 
 void Task::setDeadline(std::chrono::system_clock::time_point dl) { 
