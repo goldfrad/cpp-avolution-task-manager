@@ -5,7 +5,26 @@
 #include <limits>
 #include <chrono>
 
-ConsoleUI::ConsoleUI(TaskService& svc) : service(svc) {}
+ConsoleUI::ConsoleUI(TaskService& svc) : service(svc), running(false) {}
+
+ConsoleUI::~ConsoleUI() {
+    if (running) {
+        running = false;
+        if (autoSaveThread.joinable()) {
+            autoSaveThread.join();
+        }
+    }
+}
+
+void ConsoleUI::autoSaveWorker() {
+    while (running) {
+        std::this_thread::sleep_for(std::chrono::minutes(1));
+        if (running) {
+            service.save();
+            std::cout << "\n[Auto-saved]" << std::endl;
+        }
+    }
+}
 
 // Helper function to safely read an integer
 int readInt() {
@@ -20,6 +39,11 @@ int readInt() {
 
 void ConsoleUI::run() {
     std::cout << "=== Task Manager Started ===" << std::endl;
+    std::cout << "[Auto-save enabled - every 1 minute]" << std::endl;
+    
+    // Start auto-save thread
+    running = true;
+    autoSaveThread = std::thread(&ConsoleUI::autoSaveWorker, this);
     
     int choice;
     do {
@@ -28,6 +52,12 @@ void ConsoleUI::run() {
         choice = readInt();
         handleInput(choice);
     } while (choice != 0);
+    
+    // Stop auto-save thread
+    running = false;
+    if (autoSaveThread.joinable()) {
+        autoSaveThread.join();
+    }
     
     service.save();
     std::cout << "=== Task Manager Ended ===" << std::endl;

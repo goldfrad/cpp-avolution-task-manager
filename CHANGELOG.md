@@ -9,6 +9,25 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - GUI interface
 - C++17 features (structured bindings, optional)
 
+## [0.6.0] - 2026-01-15
+
+### Added - Multithreading with std::thread
+- **Auto-Save Background Thread**
+  - Automatic save every 1 minute
+  - Runs in separate thread using `std::thread`
+  - Thread-safe with `std::atomic<bool>`
+  - Proper cleanup in destructor
+
+- **Thread Management**
+  - Background worker thread in ConsoleUI
+  - Safe thread termination on exit
+  - `std::this_thread::sleep_for` for timing
+
+### Technical Improvements
+- Added `-pthread` flag for compilation
+- Proper RAII for thread lifecycle management
+- Visual feedback with [Auto-saved] messages
+
 ## [0.5.0] - 2026-01-15
 
 ### Added - Time Management with std::chrono

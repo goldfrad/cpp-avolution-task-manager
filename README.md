@@ -10,6 +10,7 @@ This project showcases my transition from **3 years of C programming experience*
 
 - **Console-based interface** for task management
 - **File persistence** - tasks saved/loaded automatically
+- **Auto-save** - background thread saves every minute
 - **Time management** with `std::chrono`:
   - Creation timestamps
   - Deadlines with date/time
@@ -24,11 +25,12 @@ This project showcases my transition from **3 years of C programming experience*
   - Show overdue tasks
 - **Move semantics** for efficient object handling
 - **Input validation** for robust user interaction
+- **Multithreading** with `std::thread` for background operations
 - **Modular architecture** with dedicated classes:
   - `Task` - Task data model with move semantics and timestamps
   - `TaskRepository` - Data storage with smart pointers and file I/O
   - `TaskService` - Business logic with lambda filtering
-  - `ConsoleUI` - User interface with input validation
+  - `ConsoleUI` - User interface with input validation and auto-save thread
 
 ## Project Structure
 
@@ -54,13 +56,16 @@ cpp-avolution-task-manager/
 - STL containers usage
 - Clean class interfaces
 
-### C++11 Modern Features (v0.2.0 - v0.3.0)
+### C++11 Modern Features (v0.2.0 - v0.6.0)
 - **Smart pointers** (`std::unique_ptr`) for automatic memory management
 - **Move semantics** - Rule of 5 implementation in Task class
 - **Auto keyword** usage in algorithms
 - **Lambda functions** with captures for filtering and searching
 - **Template functions** for generic predicates
 - **Input validation** with `std::numeric_limits`
+- **std::chrono** for time management (timestamps, deadlines)
+- **std::thread** for background auto-save
+- **std::atomic** for thread-safe operations
 
 ### Planned C++ Evolution Steps
 
@@ -153,4 +158,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++11 Time Management (v0.5.0)
+**Status**: 🟢 Active Development | **Current Version**: C++11 Multithreading (v0.6.0)
