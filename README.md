@@ -158,4 +158,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++14 constexpr (v0.7.0)
+**Status**: 🟢 Active Development | **Current Version**: C++14 Refactored (v0.7.1)

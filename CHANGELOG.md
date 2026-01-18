@@ -9,6 +9,24 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - GUI interface
 - C++17 features (structured bindings, optional)
 
+## [0.7.1] - 2026-01-15
+
+### Changed - Code Refactoring
+- **ConsoleUI Modularization**
+  - Extracted menu handlers into separate functions
+  - `handleListAll()`, `handleAddTask()`, `handleCompleteTask()`
+  - `handleSearchTasks()`, `handleSetDeadline()`, `handleShowOverdue()`
+  
+- **enum class MenuOption**
+  - Replaced magic numbers with named enum values
+  - Type-safe menu option handling
+  - Better code readability
+
+### Technical Improvements
+- Reduced `handleInput()` complexity
+- Single Responsibility Principle for each handler
+- Improved maintainability and testability
+
 ## [0.7.0] - 2026-01-15
 
 ### Added - C++14 constexpr Constants

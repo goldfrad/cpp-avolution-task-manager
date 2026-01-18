@@ -7,6 +7,16 @@
 #include <thread>
 #include <atomic>
 
+enum class MenuOption {
+    Exit = 0,
+    ListAll = 1,
+    AddTask = 2,
+    CompleteTask = 3,
+    SearchTasks = 4,
+    SetDeadline = 5,
+    ShowOverdue = 6
+};
+
 class ConsoleUI
 {
     private:
@@ -15,6 +25,14 @@ class ConsoleUI
         std::atomic<bool> running;
         
         void autoSaveWorker();
+        
+        // Menu handlers
+        void handleListAll();
+        void handleAddTask();
+        void handleCompleteTask();
+        void handleSearchTasks();
+        void handleSetDeadline();
+        void handleShowOverdue();
     
     public:
         ConsoleUI(TaskService& svc);
