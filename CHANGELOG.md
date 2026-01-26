@@ -9,6 +9,24 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - GUI interface
 - C++17 features (structured bindings, optional)
 
+## [0.7.2] - 2026-01-15
+
+### Changed - Code Cleanup & Separation of Concerns
+- **Status to String Helper**
+  - Added `statusToString()` function to eliminate duplicate code
+  - Centralized Status enum to string conversion
+  - Removed 3 duplicate switch statements from UI code
+
+- **Business Logic Moved to Service Layer**
+  - `createDeadline()` method in TaskService
+  - Deadline calculation logic moved from UI to Service
+  - Better separation between presentation and business logic
+
+### Technical Improvements
+- DRY principle - eliminated code duplication
+- Cleaner UI layer - only presentation logic
+- Service layer handles all business rules
+
 ## [0.7.1] - 2026-01-15
 
 ### Changed - Code Refactoring

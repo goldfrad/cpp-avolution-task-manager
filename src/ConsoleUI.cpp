@@ -114,16 +114,10 @@ void ConsoleUI::handleListAll() {
     }
     
     for (const auto& task : tasks) {
-        std::string statusStr;
-        switch (task.getStatus()) {
-            case Pending: statusStr = "Pending"; break;
-            case InProgress: statusStr = "In Progress"; break;
-            case Completed: statusStr = "Completed"; break;
-        }
         std::string overdueStr = task.isOverdue() ? " [OVERDUE]" : "";
         std::cout << "ID: " << task.getId() 
                   << " | Title: " << task.getTitle()
-                  << " | Status: " << statusStr << overdueStr << std::endl;
+                  << " | Status: " << statusToString(task.getStatus()) << overdueStr << std::endl;
         std::cout << "  Description: " << task.getDescription() << std::endl;
         std::cout << "  Created: " << task.getCreatedAtStr() 
                   << " | Deadline: " << task.getDeadlineStr() << std::endl;
@@ -153,15 +147,7 @@ void ConsoleUI::handleAddTask() {
         std::cout << "Enter minutes (0-59): ";
         int minutes = readInt();
         
-        auto now = std::chrono::system_clock::now();
-        auto now_t = std::chrono::system_clock::to_time_t(now);
-        std::tm* tm = std::localtime(&now_t);
-        tm->tm_hour = 0;
-        tm->tm_min = 0;
-        tm->tm_sec = 0;
-        auto today = std::chrono::system_clock::from_time_t(std::mktime(tm));
-        auto deadline = today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
-        
+        auto deadline = service.createDeadline(days, hours, minutes);
         service.setDeadline(newTask.getId(), deadline);
         std::cout << "Deadline set!" << std::endl;
     }
@@ -237,15 +223,9 @@ void ConsoleUI::handleSearchTasks() {
     } else {
         std::cout << "\n=== Search Results ===" << std::endl;
         for (const auto* task : results) {
-            std::string statusStr;
-            switch (task->getStatus()) {
-                case Pending: statusStr = "Pending"; break;
-                case InProgress: statusStr = "In Progress"; break;
-                case Completed: statusStr = "Completed"; break;
-            }
             std::cout << "ID: " << task->getId() 
                       << " | Title: " << task->getTitle()
-                      << " | Status: " << statusStr << std::endl;
+                      << " | Status: " << statusToString(task->getStatus()) << std::endl;
         }
     }
 }
@@ -262,14 +242,7 @@ void ConsoleUI::handleSetDeadline() {
     std::cout << "Enter minutes (0-59): ";
     int minutes = readInt();
     
-    auto now = std::chrono::system_clock::now();
-    auto now_t = std::chrono::system_clock::to_time_t(now);
-    std::tm* tm = std::localtime(&now_t);
-    tm->tm_hour = 0;
-    tm->tm_min = 0;
-    tm->tm_sec = 0;
-    auto today = std::chrono::system_clock::from_time_t(std::mktime(tm));
-    auto deadline = today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
+    auto deadline = service.createDeadline(days, hours, minutes);
     
     if (service.setDeadline(taskId, deadline)) {
         std::cout << "Deadline set successfully!" << std::endl;

@@ -6,6 +6,9 @@
 
 enum Status { Pending, InProgress, Completed };
 
+// Helper function to convert Status to string
+std::string statusToString(Status status);
+
 class Task
 {
     private:

@@ -30,6 +30,20 @@ bool TaskService::setDeadline(int id, std::chrono::system_clock::time_point dead
     return false;
 }
 
+std::chrono::system_clock::time_point TaskService::createDeadline(int days, int hours, int minutes) const {
+    auto now = std::chrono::system_clock::now();
+    auto now_t = std::chrono::system_clock::to_time_t(now);
+    std::tm* tm = std::localtime(&now_t);
+    
+    // Set to midnight
+    tm->tm_hour = 0;
+    tm->tm_min = 0;
+    tm->tm_sec = 0;
+    
+    auto today = std::chrono::system_clock::from_time_t(std::mktime(tm));
+    return today + std::chrono::hours(24 * days + hours) + std::chrono::minutes(minutes);
+}
+
 std::vector<Task> TaskService::listAll() const {
     return repo.listAll();
 }

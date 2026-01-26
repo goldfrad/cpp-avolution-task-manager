@@ -4,6 +4,16 @@
 #include <iomanip>
 #include <sstream>
 
+// Helper function implementation
+std::string statusToString(Status status) {
+    switch (status) {
+        case Pending: return "Pending";
+        case InProgress: return "In Progress";
+        case Completed: return "Completed";
+        default: return "Unknown";
+    }
+}
+
 Task::Task(int id, const std::string& title, const std::string& desc)
     : id(id), 
       title(title.substr(0, MAX_TITLE_LENGTH)), 

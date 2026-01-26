@@ -15,6 +15,10 @@ class TaskService
         Task createTask(const std::string& title, const std::string& desc);
         bool completeTask(int id);
         bool setDeadline(int id, std::chrono::system_clock::time_point deadline);
+        
+        // Helper to create deadline from days/hours/minutes
+        std::chrono::system_clock::time_point createDeadline(int days, int hours, int minutes) const;
+        
         std::vector<Task> listAll() const;
         void save() const { repo.save(); }
         
