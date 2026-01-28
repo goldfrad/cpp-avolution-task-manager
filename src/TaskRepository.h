@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <optional>
+#include <filesystem>
 #include "Task.h"
 
 class TaskRepository {
@@ -16,6 +17,7 @@ private:
     int nextId;
     
     void load();
+    void createBackup() const;
 
 public:
     TaskRepository(const std::string& file = "tasks.txt");
@@ -27,6 +29,7 @@ public:
     const std::vector<std::unique_ptr<Task>>& getAllTasks() const;
     std::vector<Task> listAll() const;
     int getNextId();
+    bool fileExists() const;
 };
 
 #endif // TASKREPOSITORY_H

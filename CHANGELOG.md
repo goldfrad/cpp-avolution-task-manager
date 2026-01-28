@@ -8,6 +8,24 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.8.1] - 2026-01-15
+
+### Added - std::filesystem Backup System
+- **Automatic Backup**
+  - Creates backup before every save operation
+  - Backups stored in `backups/` directory
+  - Timestamped backup files: `tasks_backup_[timestamp].txt`
+  
+- **Filesystem Operations**
+  - `fileExists()` - checks if tasks file exists
+  - `createBackup()` - creates timestamped backup
+  - Uses `std::filesystem` for file operations
+
+### Technical Improvements
+- Data safety with automatic backups
+- C++17 filesystem library integration
+- Backup directory auto-creation
+
 ## [0.8.0] - 2026-01-15
 
 ### Added - C++17 std::optional

@@ -3,10 +3,42 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
 TaskRepository::TaskRepository(const std::string& file) 
     : filename(file), nextId(1) {
     load();
+}
+
+bool TaskRepository::fileExists() const {
+    return std::filesystem::exists(filename);
+}
+
+void TaskRepository::createBackup() const {
+    if (!fileExists()) {
+        return;
+    }
+    
+    namespace fs = std::filesystem;
+    
+    // Create backup directory if it doesn't exist
+    fs::path backupDir = "backups";
+    if (!fs::exists(backupDir)) {
+        fs::create_directory(backupDir);
+    }
+    
+    // Create backup filename with timestamp
+    auto now = std::chrono::system_clock::now();
+    auto time = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << "backups/tasks_backup_" << time << ".txt";
+    
+    // Copy file to backup
+    try {
+        fs::copy_file(filename, ss.str(), fs::copy_options::overwrite_existing);
+    } catch (const fs::filesystem_error&) {
+        // Backup failed, but continue
+    }
 }
 
 void TaskRepository::load() {
@@ -58,6 +90,9 @@ void TaskRepository::load() {
 }
 
 void TaskRepository::save() const {
+    // Create backup before saving
+    createBackup();
+    
     std::ofstream outFile(filename);
     if (!outFile.is_open()) {
         return;

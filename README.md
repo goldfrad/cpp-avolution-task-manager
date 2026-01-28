@@ -11,6 +11,7 @@ This project showcases my transition from **3 years of C programming experience*
 - **Console-based interface** for task management
 - **File persistence** - tasks saved/loaded automatically
 - **Auto-save** - background thread saves every minute
+- **Auto-backup** - timestamped backups before each save
 - **Time management** with `std::chrono`:
   - Creation timestamps
   - Deadlines with date/time
@@ -26,9 +27,11 @@ This project showcases my transition from **3 years of C programming experience*
 - **Move semantics** for efficient object handling
 - **Input validation** for robust user interaction
 - **Multithreading** with `std::thread` for background operations
+- **Type-safe optional values** with `std::optional`
+- **Filesystem operations** with `std::filesystem`
 - **Modular architecture** with dedicated classes:
   - `Task` - Task data model with move semantics and timestamps
-  - `TaskRepository` - Data storage with smart pointers and file I/O
+  - `TaskRepository` - Data storage with smart pointers, file I/O, and backups
   - `TaskService` - Business logic with lambda filtering
   - `ConsoleUI` - User interface with input validation and auto-save thread
 
@@ -74,9 +77,11 @@ cpp-avolution-task-manager/
 - Improved type safety with constexpr validation
 - Character limits for task fields
 
-### C++17 Modernization (v0.8.0)
+### C++17 Modernization (v0.8.0 - v0.8.1)
 - **std::optional** for safer null handling
+- **std::filesystem** for file operations and backups
 - Type-safe optional return values
+- Automatic backup system
 
 **C++20 Advanced Features:**
 - Concepts for template constraints
@@ -156,4 +161,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++17 std::optional (v0.8.0)
+**Status**: 🟢 Active Development | **Current Version**: C++17 Filesystem (v0.8.1)

@@ -40,6 +40,7 @@ int readInt() {
 void ConsoleUI::run() {
     std::cout << "=== Task Manager Started ===" << std::endl;
     std::cout << "[Auto-save enabled - every 1 minute]" << std::endl;
+    std::cout << "[Auto-backup enabled - backups saved before each save]" << std::endl;
     
     // Start auto-save thread
     running = true;
