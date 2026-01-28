@@ -74,11 +74,9 @@ cpp-avolution-task-manager/
 - Improved type safety with constexpr validation
 - Character limits for task fields
 
-**C++17 Modernization:**
-- Structured bindings
-- `std::optional` for safer null handling
-- `std::variant` for type-safe unions
-- Filesystem support
+### C++17 Modernization (v0.8.0)
+- **std::optional** for safer null handling
+- Type-safe optional return values
 
 **C++20 Advanced Features:**
 - Concepts for template constraints
@@ -102,15 +100,15 @@ cpp-avolution-task-manager/
 ## How to Build and Run
 
 ```bash
-# Compile the project (C++14 required)
-g++ -std=c++14 main.cpp src/*.cpp -o task_manager -pthread
+# Compile the project (C++17 required)
+g++ -std=c++17 main.cpp src/*.cpp -o task_manager -pthread
 
 # Run the application
 ./task_manager
 ```
 
 **Requirements:**
-- C++14 compatible compiler
+- C++17 compatible compiler
 - pthread support for multithreading
 
 ## Usage Example
@@ -158,4 +156,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++14 Clean Code (v0.7.2)
+**Status**: 🟢 Active Development | **Current Version**: C++17 std::optional (v0.8.0)

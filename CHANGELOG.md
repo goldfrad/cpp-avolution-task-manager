@@ -7,7 +7,19 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 ### Planned
 - Unit testing framework
 - GUI interface
-- C++17 features (structured bindings, optional)
+
+## [0.8.0] - 2026-01-15
+
+### Added - C++17 std::optional
+- **Type-safe Optional Values**
+  - `findById()` now returns `std::optional<Task*>`
+  - Explicit handling of "not found" cases
+  - Eliminates nullptr checks with `.has_value()` and `.value()`
+
+### Changed
+- Upgraded to C++17 standard
+- Safer null handling throughout codebase
+- More expressive API with optional return types
 
 ## [0.7.2] - 2026-01-15
 

@@ -99,11 +99,14 @@ bool TaskRepository::remove(int id) {
     return false;
 }
 
-Task* TaskRepository::findById(int id) {
+std::optional<Task*> TaskRepository::findById(int id) {
     auto it = std::find_if(tasks.begin(), tasks.end(),
         [id](const std::unique_ptr<Task>& task) { return task->getId() == id; });
     
-    return (it != tasks.end()) ? it->get() : nullptr;
+    if (it != tasks.end()) {
+        return it->get();
+    }
+    return std::nullopt;
 }
 
 Task* TaskRepository::findByStatus(Status status) {
