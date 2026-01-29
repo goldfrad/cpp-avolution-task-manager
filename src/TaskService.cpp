@@ -13,8 +13,7 @@ Task TaskService::createTask(const std::string& title, const std::string& desc) 
 }
 
 bool TaskService::completeTask(int id) {
-    auto taskOpt = repo.findById(id);
-    if (taskOpt.has_value()) {
+    if (auto taskOpt = repo.findById(id); taskOpt.has_value()) {
         taskOpt.value()->setStatus(Completed);
         return true;
     }
@@ -22,8 +21,7 @@ bool TaskService::completeTask(int id) {
 }
 
 bool TaskService::setDeadline(int id, std::chrono::system_clock::time_point deadline) {
-    auto taskOpt = repo.findById(id);
-    if (taskOpt.has_value()) {
+    if (auto taskOpt = repo.findById(id); taskOpt.has_value()) {
         taskOpt.value()->setDeadline(deadline);
         return true;
     }

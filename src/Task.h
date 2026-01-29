@@ -2,6 +2,7 @@
 #ifndef TASK_H
 #define TASK_H 
 #include <string>
+#include <string_view>
 #include <chrono>
 
 enum Status { Pending, InProgress, Completed };
@@ -26,7 +27,7 @@ class Task
         static constexpr int MIN_ID = 1;
         static constexpr int MAX_ID = 999999;
         
-        Task(int id, const std::string& title, const std::string& desc);
+        Task(int id, std::string_view title, std::string_view desc);
         
         // Rule of 5 - Move semantics
         Task(Task&& other) noexcept;
@@ -42,8 +43,8 @@ class Task
         std::chrono::system_clock::time_point getCreatedAt() const;
         std::chrono::system_clock::time_point getDeadline() const;
         
-        void setTitle(const std::string& newTitle);
-        void setDescription(const std::string& newDesc);
+        void setTitle(std::string_view newTitle);
+        void setDescription(std::string_view newDesc);
         void setStatus(Status newStatus);
         void setDeadline(std::chrono::system_clock::time_point dl);
         void setCreatedAt(std::chrono::system_clock::time_point ca);

@@ -8,6 +8,24 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.8.2] - 2026-01-15
+
+### Added - C++17 Modern Syntax
+- **if with initializer**
+  - Declare variables directly in if statements
+  - Cleaner scope management: `if (auto x = func(); x.has_value())`
+  - Reduced variable lifetime and improved readability
+
+- **std::string_view**
+  - Non-owning string references for better performance
+  - Used in Task constructor and setters
+  - Eliminates unnecessary string copies
+
+### Technical Improvements
+- More expressive and concise code
+- Better performance with string_view
+- Tighter variable scoping with if initializers
+
 ## [0.8.1] - 2026-01-15
 
 ### Added - std::filesystem Backup System
