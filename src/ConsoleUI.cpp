@@ -129,21 +129,24 @@ void ConsoleUI::handleAddTask() {
     std::cout << "\n=== Add New Task ===" << std::endl;
     std::cin.ignore();
     
+    // Get task details from user
     std::string title, description;
     std::cout << "Enter task title (max " << Task::MAX_TITLE_LENGTH << " chars): ";
     std::getline(std::cin, title);
     std::cout << "Enter task description (max " << Task::MAX_DESCRIPTION_LENGTH << " chars): ";
     std::getline(std::cin, description);
     
-    // C++17 Structured bindings
+    // C++17 Structured bindings - unpack validation result
     auto [success, message] = service.validateAndCreateTask(title, description);
     
     std::cout << message << std::endl;
     
+    // If task created successfully, optionally set deadline
     if (success) {
         std::cout << "Set deadline? (1=Yes, 0=No): ";
         int setDl = readInt();
         if (setDl == 1) {
+            // Get deadline details
             std::cout << "Enter days from now (0 for today): ";
             int days = readInt();
             std::cout << "Enter hour (0-23): ";
@@ -151,8 +154,10 @@ void ConsoleUI::handleAddTask() {
             std::cout << "Enter minutes (0-59): ";
             int minutes = readInt();
             
+            // Create deadline timestamp
             auto deadline = service.createDeadline(days, hours, minutes);
-            // Get the last created task ID
+            
+            // Get the last created task ID and set its deadline
             auto tasks = service.listAll();
             if (!tasks.empty()) {
                 service.setDeadline(tasks.back().getId(), deadline);
@@ -186,37 +191,45 @@ void ConsoleUI::handleSearchTasks() {
     int searchType = readInt();
     std::vector<const Task*> results;
     
+    // Apply filter based on search type using lambda predicates
     switch (searchType) {
         case 1:
+            // Filter for pending tasks
             results = service.filter([](const Task& t) { 
                 return t.getStatus() == Pending; 
             });
             break;
         case 2:
+            // Filter for in-progress tasks
             results = service.filter([](const Task& t) { 
                 return t.getStatus() == InProgress; 
             });
             break;
         case 3:
+            // Filter for completed tasks
             results = service.filter([](const Task& t) { 
                 return t.getStatus() == Completed; 
             });
             break;
         case 4: {
+            // Search by keyword in title
             std::cin.ignore();
             std::string keyword;
             std::cout << "Enter keyword: ";
             std::getline(std::cin, keyword);
+            // Lambda captures keyword by value
             results = service.filter([keyword](const Task& t) { 
                 return t.getTitle().find(keyword) != std::string::npos; 
             });
             break;
         }
         case 5: {
+            // Filter by ID range (inclusive)
             std::cout << "Enter min ID: ";
             int minId = readInt();
             std::cout << "Enter max ID: ";
             int maxId = readInt();
+            // Lambda captures both min and max IDs
             results = service.filter([minId, maxId](const Task& t) { 
                 return t.getId() >= minId && t.getId() <= maxId; 
             });
@@ -227,6 +240,7 @@ void ConsoleUI::handleSearchTasks() {
             return;
     }
     
+    // Display results
     if (results.empty()) {
         std::cout << "No tasks found." << std::endl;
     } else {

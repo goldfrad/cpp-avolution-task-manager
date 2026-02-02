@@ -27,17 +27,17 @@ void TaskRepository::createBackup() const {
         fs::create_directory(backupDir);
     }
     
-    // Create backup filename with timestamp
+    // Create backup filename with timestamp (Unix epoch time)
     auto now = std::chrono::system_clock::now();
     auto time = std::chrono::system_clock::to_time_t(now);
     std::stringstream ss;
     ss << "backups/tasks_backup_" << time << ".txt";
     
-    // Copy file to backup
+    // Copy current file to backup location
     try {
         fs::copy_file(filename, ss.str(), fs::copy_options::overwrite_existing);
     } catch (const fs::filesystem_error&) {
-        // Backup failed, but continue
+        // Backup failed, but continue - don't block save operation
     }
 }
 
@@ -51,6 +51,7 @@ void TaskRepository::load() {
     while (std::getline(inFile, line)) {
         if (line.empty()) continue;
         
+        // Parse line format: ID|Title|Description|Status|CreatedTimestamp|DeadlineTimestamp
         std::istringstream iss(line);
         std::string idStr, title, description, statusStr, createdStr, deadlineStr;
         
@@ -61,9 +62,11 @@ void TaskRepository::load() {
         std::getline(iss, createdStr, '|');
         std::getline(iss, deadlineStr, '|');
         
+        // Convert strings to appropriate types
         int id = std::stoi(idStr);
         Status status = static_cast<Status>(std::stoi(statusStr));
         
+        // Create task and set its status
         auto task = std::make_unique<Task>(id, title, description);
         task->setStatus(status);
         
@@ -72,17 +75,24 @@ void TaskRepository::load() {
             try {
                 auto createdTime = std::chrono::system_clock::from_time_t(std::stoll(createdStr));
                 task->setCreatedAt(createdTime);
-            } catch (...) {}
+            } catch (...) {
+                // If parsing fails, keep default creation time
+            }
         }
+        
+        // Load deadline (-1 means no deadline)
         if (!deadlineStr.empty() && deadlineStr != "-1") {
             try {
                 auto deadlineTime = std::chrono::system_clock::from_time_t(std::stoll(deadlineStr));
                 task->setDeadline(deadlineTime);
-            } catch (...) {}
+            } catch (...) {
+                // If parsing fails, keep default (no deadline)
+            }
         }
         
         tasks.push_back(std::move(task));
         
+        // Update nextId to be higher than any loaded ID
         if (id >= nextId) {
             nextId = id + 1;
         }
