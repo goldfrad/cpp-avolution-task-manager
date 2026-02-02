@@ -135,22 +135,30 @@ void ConsoleUI::handleAddTask() {
     std::cout << "Enter task description (max " << Task::MAX_DESCRIPTION_LENGTH << " chars): ";
     std::getline(std::cin, description);
     
-    Task newTask = service.createTask(title, description);
-    std::cout << "Task created with ID: " << newTask.getId() << std::endl;
+    // C++17 Structured bindings
+    auto [success, message] = service.validateAndCreateTask(title, description);
     
-    std::cout << "Set deadline? (1=Yes, 0=No): ";
-    int setDl = readInt();
-    if (setDl == 1) {
-        std::cout << "Enter days from now (0 for today): ";
-        int days = readInt();
-        std::cout << "Enter hour (0-23): ";
-        int hours = readInt();
-        std::cout << "Enter minutes (0-59): ";
-        int minutes = readInt();
-        
-        auto deadline = service.createDeadline(days, hours, minutes);
-        service.setDeadline(newTask.getId(), deadline);
-        std::cout << "Deadline set!" << std::endl;
+    std::cout << message << std::endl;
+    
+    if (success) {
+        std::cout << "Set deadline? (1=Yes, 0=No): ";
+        int setDl = readInt();
+        if (setDl == 1) {
+            std::cout << "Enter days from now (0 for today): ";
+            int days = readInt();
+            std::cout << "Enter hour (0-23): ";
+            int hours = readInt();
+            std::cout << "Enter minutes (0-59): ";
+            int minutes = readInt();
+            
+            auto deadline = service.createDeadline(days, hours, minutes);
+            // Get the last created task ID
+            auto tasks = service.listAll();
+            if (!tasks.empty()) {
+                service.setDeadline(tasks.back().getId(), deadline);
+                std::cout << "Deadline set!" << std::endl;
+            }
+        }
     }
 }
 

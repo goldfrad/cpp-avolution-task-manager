@@ -16,6 +16,9 @@ class TaskService
         bool completeTask(int id);
         bool setDeadline(int id, std::chrono::system_clock::time_point deadline);
         
+        // Returns {success, message} using structured bindings
+        std::pair<bool, std::string> validateAndCreateTask(const std::string& title, const std::string& desc);
+        
         // Helper to create deadline from days/hours/minutes
         std::chrono::system_clock::time_point createDeadline(int days, int hours, int minutes) const;
         

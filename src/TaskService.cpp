@@ -12,6 +12,25 @@ Task TaskService::createTask(const std::string& title, const std::string& desc) 
     return taskCopy;
 }
 
+std::pair<bool, std::string> TaskService::validateAndCreateTask(const std::string& title, const std::string& desc) {
+    // Validation
+    if (title.empty()) {
+        return {false, "Title cannot be empty"};
+    }
+    
+    if (title.length() > Task::MAX_TITLE_LENGTH) {
+        return {false, "Title too long (max " + std::to_string(Task::MAX_TITLE_LENGTH) + " chars)"};
+    }
+    
+    if (desc.length() > Task::MAX_DESCRIPTION_LENGTH) {
+        return {false, "Description too long (max " + std::to_string(Task::MAX_DESCRIPTION_LENGTH) + " chars)"};
+    }
+    
+    // Create task
+    createTask(title, desc);
+    return {true, "Task created successfully"};
+}
+
 bool TaskService::completeTask(int id) {
     if (auto taskOpt = repo.findById(id); taskOpt.has_value()) {
         taskOpt.value()->setStatus(Completed);

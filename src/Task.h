@@ -21,11 +21,11 @@ class Task
         std::chrono::system_clock::time_point deadline;
         
     public:
-        // C++14 constexpr constants
-        static constexpr size_t MAX_TITLE_LENGTH = 100;
-        static constexpr size_t MAX_DESCRIPTION_LENGTH = 500;
-        static constexpr int MIN_ID = 1;
-        static constexpr int MAX_ID = 999999;
+        // C++17 inline variables - no need for .cpp definition
+        static inline constexpr size_t MAX_TITLE_LENGTH = 100;
+        static inline constexpr size_t MAX_DESCRIPTION_LENGTH = 500;
+        static inline constexpr int MIN_ID = 1;
+        static inline constexpr int MAX_ID = 999999;
         
         Task(int id, std::string_view title, std::string_view desc);
         

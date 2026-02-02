@@ -8,6 +8,29 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.8.3] - 2026-01-15
+
+### Added - C++17 Structured Bindings & Inline Variables
+- **Structured Bindings**
+  - `auto [success, message] = validateAndCreateTask(...)`
+  - Automatic unpacking of pairs/tuples
+  - Cleaner code for multi-return functions
+
+- **Inline Variables**
+  - `static inline constexpr` for class constants
+  - No need for separate .cpp definitions
+  - Cleaner header-only constants
+
+- **Task Validation**
+  - New `validateAndCreateTask()` function
+  - Returns {success, message} pair
+  - Validates title and description length
+
+### Technical Improvements
+- More expressive multi-return values
+- Better validation with clear error messages
+- Modern C++17 syntax throughout
+
 ## [0.8.2] - 2026-01-15
 
 ### Added - C++17 Modern Syntax

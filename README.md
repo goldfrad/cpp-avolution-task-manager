@@ -77,13 +77,16 @@ cpp-avolution-task-manager/
 - Improved type safety with constexpr validation
 - Character limits for task fields
 
-### C++17 Modernization (v0.8.0 - v0.8.2)
+### C++17 Modernization (v0.8.0 - v0.8.3)
 - **std::optional** for safer null handling
 - **std::filesystem** for file operations and backups
 - **if with initializer** for cleaner scope management
 - **std::string_view** for efficient string handling
+- **Structured bindings** for multi-return values
+- **Inline variables** for header-only constants
 - Type-safe optional return values
 - Automatic backup system
+- Input validation with clear error messages
 
 **C++20 Advanced Features:**
 - Concepts for template constraints
@@ -163,4 +166,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++17 Modern Syntax (v0.8.2)
+**Status**: 🟢 Active Development | **Current Version**: C++17 Complete (v0.8.3)
