@@ -49,7 +49,8 @@ cpp-avolution-task-manager/
     ├── TaskService.h       # Business logic interface
     ├── TaskService.cpp     # Business logic implementation
     ├── ConsoleUI.h         # UI layer interface
-    └── ConsoleUI.cpp       # UI layer implementation
+    ├── ConsoleUI.cpp       # UI layer implementation
+    └── Concepts.h          # C++20 Concepts definitions
 ```
 
 ## Evolution Roadmap
@@ -88,11 +89,10 @@ cpp-avolution-task-manager/
 - Automatic backup system
 - Input validation with clear error messages
 
-**C++20 Advanced Features:**
-- Concepts for template constraints
-- Ranges library
-- Coroutines for async operations
-- Modules for better code organization
+### C++20 Advanced Features (v0.9.0)
+- **Concepts** for template constraints and type safety
+- Compile-time validation of template arguments
+- Self-documenting generic code
 
 **C++23 Latest Features:**
 - `std::print` for modern output
@@ -110,15 +110,15 @@ cpp-avolution-task-manager/
 ## How to Build and Run
 
 ```bash
-# Compile the project (C++17 required)
-g++ -std=c++17 main.cpp src/*.cpp -o task_manager -pthread
+# Compile the project (C++20 required)
+g++ -std=c++20 main.cpp src/*.cpp -o task_manager -pthread
 
 # Run the application
 ./task_manager
 ```
 
 **Requirements:**
-- C++17 compatible compiler
+- C++20 compatible compiler
 - pthread support for multithreading
 
 ## Usage Example
@@ -166,4 +166,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++17 Complete (v0.8.3)
+**Status**: 🟢 Active Development | **Current Version**: C++20 Concepts (v0.9.0)

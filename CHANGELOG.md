@@ -8,6 +8,26 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.9.0] - 2026-02-17
+
+### Added - C++20 Concepts
+- **Type Constraints with Concepts**
+  - `TaskPredicate` - ensures filter predicates are valid
+  - `TaskFilter` - validates filter functions
+  - `Comparable` - generic comparison concept
+  - `StringConvertible` - type-to-string conversion
+  - `TaskId` - validates task ID types
+
+- **Compile-time Type Safety**
+  - Better error messages for invalid template arguments
+  - Prevents misuse of filter function
+  - Self-documenting template requirements
+
+### Changed
+- Upgraded to C++20 standard
+- Filter function now uses concept constraints
+- Created dedicated Concepts.h for reusable concepts
+
 ## [0.8.3] - 2026-01-15
 
 ### Added - C++17 Structured Bindings & Inline Variables

@@ -4,6 +4,7 @@
 #define TASKSERVICE_H
 
 #include "TaskRepository.h"
+#include "Concepts.h"
 
 class TaskService
 {
@@ -25,9 +26,9 @@ class TaskService
         std::vector<Task> listAll() const;
         void save() const { repo.save(); }
         
-        // Filter with lambda predicate
-        template<typename Predicate>
-        std::vector<const Task*> filter(Predicate predicate) const {
+        // C++20 Concept-constrained filter - only accepts valid predicates
+        template<TaskPredicate Pred>
+        std::vector<const Task*> filter(Pred predicate) const {
             std::vector<const Task*> result;
             for (const auto& task : repo.getAllTasks()) {
                 if (predicate(*task)) {
