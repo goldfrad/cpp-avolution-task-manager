@@ -89,8 +89,12 @@ cpp-avolution-task-manager/
 - Automatic backup system
 - Input validation with clear error messages
 
-### C++20 Advanced Features (v0.9.0)
+### C++20 Advanced Features (v0.9.0 - v0.9.1)
 - **Concepts** for template constraints and type safety
+- **Ranges** for functional-style data processing
+- Range views (`filter`, `transform`) for lazy evaluation
+- Composable range pipelines with `|` operator
+- Query functions using modern range operations
 - Compile-time validation of template arguments
 - Self-documenting generic code
 
@@ -166,4 +170,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++20 Concepts (v0.9.0)
+**Status**: 🟢 Active Development | **Current Version**: C++20 Ranges (v0.9.1)

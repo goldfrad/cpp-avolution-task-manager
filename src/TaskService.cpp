@@ -68,3 +68,42 @@ std::chrono::system_clock::time_point TaskService::createDeadline(int days, int 
 std::vector<Task> TaskService::listAll() const {
     return repo.listAll();
 }
+
+// C++20 Ranges: Get task titles by status
+std::vector<std::string> TaskService::getTaskTitlesByStatus(Status status) const {
+    auto tasks = repo.getAllTasks();
+    
+    // Use ranges to filter by status and transform to titles
+    auto titleView = tasks 
+        | std::views::filter([status](const auto& task) { return task->getStatus() == status; })
+        | std::views::transform([](const auto& task) { return task->getTitle(); });
+    
+    // Convert view to vector
+    return std::vector<std::string>(titleView.begin(), titleView.end());
+}
+
+// C++20 Ranges: Count tasks by status
+size_t TaskService::countByStatus(Status status) const {
+    auto tasks = repo.getAllTasks();
+    
+    // Use ranges to filter and count
+    auto filtered = tasks | std::views::filter([status](const auto& task) { 
+        return task->getStatus() == status; 
+    });
+    
+    return std::ranges::distance(filtered);
+}
+
+// C++20 Ranges: Get all overdue task titles
+std::vector<std::string> TaskService::getOverdueTitles() const {
+    auto tasks = repo.getAllTasks();
+    auto now = std::chrono::system_clock::now();
+    
+    // Use ranges to filter overdue tasks and get their titles
+    auto overdueView = tasks
+        | std::views::filter([now](const auto& task) { return task->isOverdue(now); })
+        | std::views::transform([](const auto& task) { return task->getTitle(); });
+    
+    // Convert view to vector
+    return std::vector<std::string>(overdueView.begin(), overdueView.end());
+}

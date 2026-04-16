@@ -8,6 +8,26 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.9.1] - 2026-04-16
+
+### Added - C++20 Ranges Integration
+- **Range-based Query Functions**
+  - `getTaskTitlesByStatus(Status)` - filters tasks by status and extracts titles
+  - `countByStatus(Status)` - counts tasks with specific status
+  - `getOverdueTitles()` - retrieves titles of all overdue tasks
+
+- **Modern Range Operations**
+  - `std::views::filter` for lazy filtering
+  - `std::views::transform` for projection operations
+  - `std::ranges::distance` for efficient counting
+  - Composable range pipelines with `|` operator
+
+### Technical Improvements
+- More expressive query operations with ranges
+- Lazy evaluation for better performance
+- Functional programming style with range adapters
+- Added `#include <ranges>` and `#include <algorithm>`
+
 ## [0.9.0] - 2026-02-17
 
 ### Added - C++20 Concepts

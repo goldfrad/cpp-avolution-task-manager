@@ -5,6 +5,8 @@
 
 #include "TaskRepository.h"
 #include "Concepts.h"
+#include <ranges>
+#include <algorithm>
 
 class TaskService
 {
@@ -37,6 +39,15 @@ class TaskService
             }
             return result;
         }
+        
+        // C++20 Ranges: Get task titles by status
+        std::vector<std::string> getTaskTitlesByStatus(Status status) const;
+        
+        // C++20 Ranges: Count tasks by status
+        size_t countByStatus(Status status) const;
+        
+        // C++20 Ranges: Get all overdue task titles
+        std::vector<std::string> getOverdueTitles() const;
 }; 
 
 #endif // TASKSERVICE_H
