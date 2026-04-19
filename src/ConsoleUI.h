@@ -33,6 +33,7 @@ class ConsoleUI
         void handleSearchTasks();
         void handleSetDeadline();
         void handleShowOverdue();
+        void displayStatistics();
     
     public:
         ConsoleUI(TaskService& svc);

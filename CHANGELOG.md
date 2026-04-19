@@ -8,6 +8,31 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.9.2] - 2026-04-19
+
+### Added - C++20 std::format Integration
+- **Modern String Formatting**
+  - `std::format` for type-safe, readable output formatting
+  - Formatted task display with aligned columns
+  - Statistics display with formatted tables and percentages
+  - `displayStatistics()` function using ranges and format
+
+- **Enhanced UI Display**
+  - Aligned task output with fixed-width columns
+  - Professional table formatting for statistics
+  - Percentage calculations with decimal precision
+
+### Fixed
+- **C++20 Ranges Compilation Issues**
+  - Fixed `getAllTasks()` to use const reference instead of copy
+  - Corrected `isOverdue()` function call (removed unnecessary parameter)
+  - Fixed format specifiers for string types
+
+### Technical Improvements
+- Added `#include <format>` for C++20 formatting support
+- Improved code readability with modern formatting
+- Better separation of concerns in display logic
+
 ## [0.9.1] - 2026-04-16
 
 ### Added - C++20 Ranges Integration

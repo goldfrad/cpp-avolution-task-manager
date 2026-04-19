@@ -71,7 +71,7 @@ std::vector<Task> TaskService::listAll() const {
 
 // C++20 Ranges: Get task titles by status
 std::vector<std::string> TaskService::getTaskTitlesByStatus(Status status) const {
-    auto tasks = repo.getAllTasks();
+    const auto& tasks = repo.getAllTasks();
     
     // Use ranges to filter by status and transform to titles
     auto titleView = tasks 
@@ -84,7 +84,7 @@ std::vector<std::string> TaskService::getTaskTitlesByStatus(Status status) const
 
 // C++20 Ranges: Count tasks by status
 size_t TaskService::countByStatus(Status status) const {
-    auto tasks = repo.getAllTasks();
+    const auto& tasks = repo.getAllTasks();
     
     // Use ranges to filter and count
     auto filtered = tasks | std::views::filter([status](const auto& task) { 
@@ -96,12 +96,11 @@ size_t TaskService::countByStatus(Status status) const {
 
 // C++20 Ranges: Get all overdue task titles
 std::vector<std::string> TaskService::getOverdueTitles() const {
-    auto tasks = repo.getAllTasks();
-    auto now = std::chrono::system_clock::now();
+    const auto& tasks = repo.getAllTasks();
     
     // Use ranges to filter overdue tasks and get their titles
     auto overdueView = tasks
-        | std::views::filter([now](const auto& task) { return task->isOverdue(now); })
+        | std::views::filter([](const auto& task) { return task->isOverdue(); })
         | std::views::transform([](const auto& task) { return task->getTitle(); });
     
     // Convert view to vector

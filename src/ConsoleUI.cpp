@@ -4,6 +4,7 @@
 #include <string>
 #include <limits>
 #include <chrono>
+#include <format>
 
 ConsoleUI::ConsoleUI(TaskService& svc) : service(svc), running(false) {}
 
@@ -116,12 +117,11 @@ void ConsoleUI::handleListAll() {
     
     for (const auto& task : tasks) {
         std::string overdueStr = task.isOverdue() ? " [OVERDUE]" : "";
-        std::cout << "ID: " << task.getId() 
-                  << " | Title: " << task.getTitle()
-                  << " | Status: " << statusToString(task.getStatus()) << overdueStr << std::endl;
-        std::cout << "  Description: " << task.getDescription() << std::endl;
-        std::cout << "  Created: " << task.getCreatedAtStr() 
-                  << " | Deadline: " << task.getDeadlineStr() << std::endl;
+        std::cout << std::format ("ID: {:>3} | Title: {:30} | Status: {:12}{}\n",
+            task.getId(), task.getTitle(), statusToString(task.getStatus()), overdueStr);
+        std::cout << "\t  Description: " << task.getDescription() << std::endl;
+        std::cout << "\t  Created: " << task.getCreatedAtStr() 
+                  << " | Deadline: " << task.getDeadlineStr() << "\n";
     }
 }
 
@@ -289,4 +289,29 @@ void ConsoleUI::handleShowOverdue() {
                       << " | Deadline: " << task->getDeadlineStr() << std::endl;
         }
     }
+}
+
+// Display task statistics using std::format and C++20 Ranges
+void ConsoleUI::displayStatistics() {
+    int total = service.listAll().size();
+    
+    // Use C++20 Ranges functions from TaskService
+    size_t pending = service.countByStatus(Status::Pending);
+    size_t inProgress = service.countByStatus(Status::InProgress);
+    size_t completed = service.countByStatus(Status::Completed);
+    
+    double completionRate = total > 0 ? (completed * 100.0 / total) : 0.0;
+    
+    std::cout << std::format("\n{:=^50}\n", " Task Statistics ");
+    std::cout << std::format("│ {:20} │ {:>10} │ {:>10} │\n", "Category", "Count", "Percentage");
+    std::cout << std::format("{:-^50}\n", "");
+    std::cout << std::format("│ {:20} │ {:>10} │ {:>9.1f}% │\n", 
+        "Total Tasks", total, 100.0);
+    std::cout << std::format("│ {:20} │ {:>10} │ {:>9.1f}% │\n",
+        "Pending", pending, total > 0 ? pending * 100.0 / total : 0.0);
+    std::cout << std::format("│ {:20} │ {:>10} │ {:>9.1f}% │\n",
+        "In Progress", inProgress, total > 0 ? inProgress * 100.0 / total : 0.0);
+    std::cout << std::format("│ {:20} │ {:>10} │ {:>9.1f}% │\n",
+        "Completed", completed, completionRate);
+    std::cout << std::format("{:=^50}\n", "");
 }

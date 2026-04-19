@@ -9,6 +9,8 @@ This project showcases my transition from **3 years of C programming experience*
 ## Current Features
 
 - **Console-based interface** for task management
+- **Modern C++20 formatting** with `std::format` for clean, aligned output
+- **Statistics display** with formatted tables showing task distribution
 - **File persistence** - tasks saved/loaded automatically
 - **Auto-save** - background thread saves every minute
 - **Auto-backup** - timestamped backups before each save
@@ -89,12 +91,15 @@ cpp-avolution-task-manager/
 - Automatic backup system
 - Input validation with clear error messages
 
-### C++20 Advanced Features (v0.9.0 - v0.9.1)
+### C++20 Advanced Features (v0.9.0 - v0.9.2)
 - **Concepts** for template constraints and type safety
 - **Ranges** for functional-style data processing
+- **std::format** for modern, type-safe string formatting
 - Range views (`filter`, `transform`) for lazy evaluation
 - Composable range pipelines with `|` operator
 - Query functions using modern range operations
+- Formatted output with alignment and precision control
+- Professional table formatting for statistics
 - Compile-time validation of template arguments
 - Self-documenting generic code
 
@@ -170,4 +175,4 @@ This repository is not just a task manager – it's a **learning journey** and a
 
 ---
 
-**Status**: 🟢 Active Development | **Current Version**: C++20 Ranges (v0.9.1)
+**Status**: 🟢 Active Development | **Current Version**: C++20 Format & Ranges (v0.9.2)
