@@ -5,6 +5,8 @@
 #include <sstream>
 #include <chrono>
 
+#include "Debug.h"
+
 TaskRepository::TaskRepository(const std::string& file) 
     : filename(file), nextId(1) {
     load();
@@ -39,6 +41,7 @@ void TaskRepository::createBackup() const {
     } catch (const fs::filesystem_error&) {
         // Backup failed, but continue - don't block save operation
     }
+    DEBUG_ALWAYS_F("Backup created: {}", ss.str());
 }
 
 void TaskRepository::load() {
@@ -46,6 +49,7 @@ void TaskRepository::load() {
     if (!inFile.is_open()) {
         return; // No file yet, start fresh
     }
+    DEBUG_ALWAYS_F("Loading tasks from {}", filename);
     
     std::string line;
     while (std::getline(inFile, line)) {

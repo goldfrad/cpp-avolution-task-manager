@@ -8,6 +8,28 @@ All notable changes to the C++ Evolution Task Manager project will be documented
 - Unit testing framework
 - GUI interface
 
+## [0.9.3] - 2026-05-18
+
+### Added - Debug Logging System
+- **C++20 std::source_location Debug Utility**
+  - `Debug.h` - header-only debug logging utility
+  - Automatic file name, line number, and function name capture
+  - `DEBUG_ALWAYS()` - always-on debug messages
+  - `DEBUG_ALWAYS_F()` - formatted debug with parameters
+  - `DEBUG_LOG()` / `DEBUG_LOGF()` - conditional debug (only when DEBUG_ENABLED)
+  
+- **Debug Integration**
+  - Debug logging in TaskRepository (file I/O operations)
+  - Debug logging in TaskService (business logic)
+  - Debug logging in main.cpp (application lifecycle)
+  - Zero overhead when disabled (compile-time removal)
+
+### Technical Improvements
+- Modern C++20 `std::source_location` for automatic context capture
+- Variadic templates for flexible parameter passing
+- Macro-based conditional compilation for debug control
+- Header-only implementation for easy integration
+
 ## [0.9.2] - 2026-04-19
 
 ### Added - C++20 std::format Integration

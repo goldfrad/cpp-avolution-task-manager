@@ -2,6 +2,8 @@
 #include "TaskService.h"
 #include <memory>
 
+#include "Debug.h"
+
 TaskService::TaskService(TaskRepository& repository) : repo(repository) {}
 
 Task TaskService::createTask(const std::string& title, const std::string& desc) {
@@ -9,6 +11,7 @@ Task TaskService::createTask(const std::string& title, const std::string& desc) 
     auto newTask = std::make_unique<Task>(id, title, desc);
     Task taskCopy = *newTask;
     repo.add(std::move(newTask));
+    DEBUG_LOGF("Task created with ID: {} Title {}", id, title);   
     return taskCopy;
 }
 
